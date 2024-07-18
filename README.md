@@ -7,7 +7,7 @@ Eagle is an OCR engine written in C++ and using Tesseract, and OpenCV.
 ## Getting Started
 ### Building
 ```bash
-git glone https://github.com/renemuala/eagle # clone a fresh copy of the repository
+git clone https://github.com/renemuala/eagle # clone a fresh copy of the repository
 xmake # build the project
 ```
 
