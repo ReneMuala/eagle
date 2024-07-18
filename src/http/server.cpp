@@ -1,7 +1,9 @@
 #include "server.hpp"
-#include <crow/app.h>
+#include "../cv/ocr.hpp"
+#include "crow/common.h"
 #include "opencv2/core/mat.hpp"
 #include "opencv2/imgcodecs.hpp"
+#include <crow/app.h>
 
 using namespace eagle;
 
@@ -64,16 +66,15 @@ crow::response Server::ocr_handler(const crow::request &req) {
   crow::json::wvalue response_body;
   crow::multipart::message message(req);
   const auto &[buffer, ok_buffer] = read_image_data(message);
-  if (not ok_buffer) {
+  if (not ok_buffer or buffer.empty()) {
     response_body["type"] = "NO_IMAGE_FILE_FOUND";
     response_body["title"] = "No image";
     response_body["detail"] = "The multipart request should contain the image "
                               "to be scanned under a field named 'image'";
-    return crow::response(400, response_body);
+    return crow::response(crow::status::BAD_REQUEST, response_body);
   }
 
   const auto &[mat, ok_mat] = read_image_from_buffer(buffer);
-  /*
 
   if (not ok_mat) {
     response_body["type"] = "INVALID_IMAGE_FILE";
@@ -82,10 +83,10 @@ crow::response Server::ocr_handler(const crow::request &req) {
         "The uploaded file could not be readed as a valid OpenCV matrix";
     response_body["read_more"] =
         "https://docs.opencv.org/3.4/d4/da8/group__imgcodecs.html";
-    return crow::response(400, response_body);
+    return crow::response(crow::status::BAD_REQUEST, response_body);
   }
-
-  const auto &[ocr_resultt, ok_ocr_resultt] = ocr.peform_ocr(mat);
+  eagle::OCR engine;
+  const auto &[ocr_resultt, ok_ocr_resultt] = engine.peform_ocr(mat);
   const auto &[bird_eye_view_mat, orc_readed_text] = ocr_resultt;
 
   if (not ok_ocr_resultt) {
@@ -93,11 +94,11 @@ crow::response Server::ocr_handler(const crow::request &req) {
     response_body["title"] = "ocr scanned";
     response_body["detail"] =
         "Could not detect document shape from the provided image";
-    return crow::response(400, response_body);
+    return crow::response(crow::status::BAD_REQUEST, response_body);
   }
   response_body["content"] = orc_readed_text;
-  */
-  return crow::response(200, response_body);
+  
+  return crow::response(crow::status::OK, response_body);
 }
 
 void Server::run() {

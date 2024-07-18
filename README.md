@@ -13,7 +13,10 @@ xmake # build the project
 
 ### Running
 ```bash
-xmake run eagle fake/path/picture.jpeg # run the project
+xmake run eagle fake/path/picture.jpeg # run eagle in filesystem mode
+# or
+xmake run eagle http 1234  # run eagle in http mode at port 1234
+
 ```
 
 ## License
