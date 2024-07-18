@@ -141,7 +141,7 @@ OCR::get_utf8_text_with_tesseract(const std::tuple<cv::Mat, bool> &imaget) {
 OCR::OCR() {
   CROW_LOG_INFO << "Initializig tesseract API";
   tesseractAPI = new tesseract::TessBaseAPI();
-  tesseractAPI->Init("./", "por", tesseract::OEM_LSTM_ONLY);
+  tesseractAPI->Init("../../../../data", "por", tesseract::OEM_LSTM_ONLY);
   tesseractAPI->SetPageSegMode(tesseract::PSM_AUTO);
   CROW_LOG_INFO << "Tesseract API is ready";
 }
