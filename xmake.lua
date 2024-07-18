@@ -1,20 +1,12 @@
 add_rules("mode.debug", "mode.release", "plugin.compile_commands.autoupdate")
 
-add_requires("libwebp","opencv", "crow", "curl", "tesseract")
-
-target("imutils")
-    set_languages("c++23")
-    set_kind("static")
-    add_files("src/imutils/*.cpp")
-    add_packages("opencv", "curl")
+add_requires("libwebp","opencv", "crow", "tesseract")
 
 target("eagle")
     set_languages("c++23")
     set_kind("binary")
-    add_files("src/*.cpp","src/cv/*.cpp","src/http/*.cpp")
-    add_deps("imutils")
-    add_packages("opencv", "crow", "imutils", "tesseract")
-
+    add_files("src/imutils/*.cpp","src/*.cpp","src/cv/*.cpp","src/http/*.cpp")
+    add_packages("opencv", "crow", "tesseract")
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
 --
