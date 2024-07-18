@@ -4,7 +4,7 @@ add_requires("libwebp","opencv", "crow", "curl", "tesseract")
 
 target("imutils")
     set_languages("c++23")
-    set_kind("shared")
+    set_kind("static")
     add_files("src/imutils/*.cpp")
     add_packages("opencv", "curl")
 
