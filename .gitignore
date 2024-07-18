@@ -1,0 +1,13 @@
+# Xmake cache
+.xmake/
+build/
+private/
+src/temp/
+.cache/
+.vscode/
+.xmake/
+
+# MacOS Cache
+.DS_Store
+
+
